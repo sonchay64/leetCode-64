@@ -41,6 +41,53 @@ class Solution {
  * @param Integer[] $nums
  * @return Integer
  */
+//solution using php's built-in function at max level
+function mostFrequentEven_diffSolution($nums) {
+        
+        $freq_arr = array();
+
+        foreach($nums as $n)
+        {
+            if($n%2==0)
+            {
+                $freq_arr[]=$n;
+            }
+        }
+        
+        if(empty($freq_arr))
+	{
+		return 0;
+	}
+        $freq_arr = array_count_values($freq_arr);
+    	$onlyfreq_min = array();
+    
+        foreach($freq_arr as $number=>$frequence)
+        {
+            if(!array_key_exists($frequence,$onlyfreq_min))
+            {
+                $onlyfreq_min[$frequence]=$number;
+            }
+            else
+            {
+                $tied_number = $freq_arr[$frequence];
+
+                if($tied_number<$number)
+                {
+                    $onlyfreq_min[$frequence]=$tied_number;
+                }
+                else
+                {
+                    $onlyfreq_min[$frequence]=$number;
+                }
+            }
+        }
+
+        $max_frequency = max($onlyfreq_min);
+        return $max_frequency;
+
+}
+
+//not using php's built-in-function as much as
 function mostFrequentEven($nums) {
     
     $freq_arr = array();
