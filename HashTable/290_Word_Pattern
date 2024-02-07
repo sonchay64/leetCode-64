@@ -1,0 +1,140 @@
+<?php
+
+/*
+Avalable @ https://leetcode.com/problems/word-pattern/submissions/1168666930
+*/
+
+/* ############### 290. Word Pattern ################
+
+Given a pattern and a string s, find if s follows the same pattern.
+
+Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.
+
+ 
+
+Example 1:
+
+Input: pattern = "abba", s = "dog cat cat dog"
+Output: true
+Example 2:
+
+Input: pattern = "abba", s = "dog cat cat fish"
+Output: false
+Example 3:
+
+Input: pattern = "aaaa", s = "dog cat cat dog"
+Output: false
+ 
+
+Constraints:
+
+1 <= pattern.length <= 300
+pattern contains only lower-case English letters.
+1 <= s.length <= 3000
+s contains only lowercase English letters and spaces ' '.
+s does not contain any leading or trailing spaces.
+All the words in s are separated by a single space.
+
+*/
+
+class Solution {
+
+    /**
+     * @param String $pattern
+     * @param String $s
+     * @return Boolean
+     */
+    function wordPattern($pattern, $s)
+    {
+        $map_cTOw = array();// map character to word
+        $map_wTOc = array(); //map word to character
+
+        $pattern_char = str_split($pattern);
+        $string_word = explode(" ",$s);
+
+        if(count($pattern_char) != count($string_word)){return false;}
+
+        for($i=0;$i<count($pattern_char);$i++)
+        {
+            $char = $pattern_char[$i];
+            $word = $string_word[$i];
+
+            if(isset($map_cTOw[$char]) && $map_cTOw[$char] != $word)
+            {
+                return false;
+            }
+            else if(isset($map_wTOc[$word]) && $map_wTOc[$word] != $char)
+            {
+                return false;
+            }
+            else
+            {
+                $map_cTOw[$char]=$word;
+                $map_wTOc[$word]=$char;
+            }
+        }
+        return true;
+    }
+}
+
+//test cases
+$pattern_abba = "abba"; 
+$s_abba = "dog cat cat dog";
+
+$pattern_abba ="abba";
+$s_dogdogdog ="dog dog dog dog";
+
+//$pattern ="aba";
+//$s="dog cat cat";
+
+//$pattern ="e";
+//$s="eukera";
+
+//$pattern ="abc";
+//$s="b c a";
+
+//$pattern ="e";
+//$s="eukera";
+
+//$pattern ="deadbeef";
+//$s = "d e a d b e e f";
+
+//$pattern ="hut";
+//$s = "unit test harpoon";
+
+//$pattern ="aaa";
+//$s="aa aa aa aa";
+
+//$pattern ="aaa";
+//$s="aa aa aa aa";
+
+//$pattern="syys";
+//$s="a abc abc a";
+
+$result = $sol ->wordPattern($pattern, $s);
+echo $result ? "true" : "false";
+echo "<br/><br/>abba (true)<br/>";
+echo ($sol ->wordPattern($pattern_abba, $s_abba))? "true" : "false";
+echo "<br/><br/>abba (dog dog dog dog) (false)<br/>";
+echo ($sol ->wordPattern($pattern_abba, $s_dogdogdog))? "true" : "false";
+
+/*
+  ########## Note ############
+
+1.What does it mean by "bijection between a letter in pattern and a non-empty word in string in solving word pattern"?
+
+=> 
+In the context of solving the "Word Pattern" problem, a bijection between a letter in the pattern and a non-empty word in the string means a one-to-one correspondence or mapping. It implies that each unique letter in the pattern is mapped to a unique non-empty word in the string, and vice versa.
+
+When we say there is a bijection between a pattern and a string, it means that each unique letter in the pattern is associated with a unique word in the string, and vice versa.
+
+For example, let's say our pattern is "abc" and our string is "b c a". To have a bijection:
+
+The letter 'a' in the pattern should consistently correspond to the word 'b' in the string.
+The letter 'b' in the pattern should consistently correspond to the word 'c' in the string.
+The letter 'c' in the pattern should consistently correspond to the word 'a' in the string.
+If these conditions are met, we have a bijection, and the string follows the pattern. If there's any inconsistency or if multiple letters map to the same word, it's not a bijection, and the string doesn't follow the pattern.
+
+In the context of solving the "Word Pattern" problem, we need to check if the given string follows the pattern by ensuring this one-to-one correspondence between letters and words.
+
+*/
