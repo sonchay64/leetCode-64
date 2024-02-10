@@ -1,0 +1,122 @@
+<?php 
+
+# Available @ https://leetcode.com/problems/contains-duplicate-ii/submissions/1171325109
+
+/*
+############# 219. Contains Duplicate II #############
+
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1
+Output: true
+Example 3:
+
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+-109 <= nums[i] <= 109
+0 <= k <= 105
+
+*/
+
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Boolean
+     */
+    function containsNearbyDuplicate($nums, $k) {
+
+// Start :: Solution 1
+
+       $item_occurence = array_count_values($nums);
+       $max_occured_val = max(array_keys($item_occurence, max($item_occurence)));
+
+        $num_map = [];
+        $arr_size = count($nums);
+
+        for($i=0;$i<$arr_size;$i++)
+        {
+            $num = $nums[$i];
+
+            if($num != $max_occured_val)
+            {
+                continue;
+            }
+            else
+            {
+                if(isset($num_map[$num]) && abs($i-$num_map[$num]) <=$k)
+                {
+                    return true;
+                }
+                else
+                {
+                    $num_map[$num]=$i;
+                }
+            }
+        }
+
+        return false;
+
+// End :: Solution 1
+
+//start :: Solution 2 (Less Efficient)
+
+/*
+        $item_occurence = array_count_values($nums);
+
+        $max_occured_val = max(array_keys($item_occurence, max($item_occurence)));
+
+       $num_map = [];
+
+        foreach($nums as $key=>$v)
+        {
+            if(isset($num_map[$v]) && (abs($key-$num_map[$v]) <=$k) && $v==$max_occured_val)
+            {
+               return true;
+            }
+            else
+            {
+                $num_map[$v]=$key;
+            }
+        }
+
+        return false;
+*/
+
+//End :: Solution 2
+
+    }
+}
+
+//$nums = [1,2,3,1];
+//$k=3;
+
+//$nums = [1,2,3,1,2,3];
+//$k=2;
+
+$nums = [1,0,1,1];
+$k=1;
+
+//$nums =[99,99];//true
+//$k = 2;
+
+//$nums = [1,2,1]; //false
+//$k=1; 
+
+$sol = new Solution();
+$result = $sol->containsNearbyDuplicate($nums,$k);
+echo $result ? "true" : "false";
