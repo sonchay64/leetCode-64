@@ -1,0 +1,84 @@
+<?php 
+
+# Availble at https://leetcode.com/problems/ransom-note/submissions/1185514040
+
+/*
+
+  ######### 383. Ransom Note ###########
+
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+
+Each letter in magazine can only be used once in ransomNote.
+
+ 
+
+Example 1:
+
+Input: ransomNote = "a", magazine = "b"
+Output: false
+Example 2:
+
+Input: ransomNote = "aa", magazine = "ab"
+Output: false
+Example 3:
+
+Input: ransomNote = "aa", magazine = "aab"
+Output: true
+ 
+
+Constraints:
+
+1 <= ransomNote.length, magazine.length <= 105
+ransomNote and magazine consist of lowercase English letters.
+*/
+
+class Solution {
+
+    /**
+     * @param String $ransomNote
+     * @param String $magazine
+     * @return Boolean
+     */
+    function canConstruct($ransomNote, $magazine) 
+    {
+        //word => characters
+        $magazine_arr = str_split($magazine);
+        $ransome_arr = str_split($ransomNote);
+
+        for($i=0;$i<count($ransome_arr);$i++)
+        {
+            $ransome_chr = $ransome_arr[$i]; //character from ransome note
+
+            //looking in magazine if ransome charcter exists
+            $key = array_search($ransome_chr,$magazine_arr); // array_search returns the key of first occurence
+
+            // if key does not exists => ransomNote can not be constructed by using the letters from magazine
+            if($key === false)
+            {
+                return false;
+            }
+            else 
+            {
+                unset($magazine_arr[$key]); // unset the character from magazine as Each letter in magazine can only be used once in ransomNote.
+            }
+        }
+        return true;
+    }
+}
+
+$obj = new Solution();
+//$ransomNote = "a";
+//$magazine = "b";
+
+//$ransomNote = "aa";
+//$magazine = "ab";
+
+//$ransomNote = "aa";
+//$magazine = "aab";
+
+$ransomNote = "aab";
+$magazine ="baa";
+
+$res = $obj->canConstruct($ransomNote,$magazine);
+echo ($res)?"true":"false";
+?>
