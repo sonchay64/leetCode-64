@@ -63,6 +63,47 @@ class Solution {
 	        }
         }
     }
+
+//---- Without Built-in Function 01
+
+function searchRange_withoutBuiltIn01($nums, $target) {
+
+    	$len = count($nums);
+        $res = array();
+
+        for($i=0;$i<$len;$i++)
+        {
+            $val = $nums[$i];
+
+            if($val == $target)
+            {
+                if(empty($res) || count($res)<2)
+                {
+                   array_push($res, $i); 
+                }
+                else if(count($res)==2)
+                {
+                    $res[1]=$i;
+                }
+                
+            }
+        }
+
+        if(!empty($res) && count($res)==2)
+        {
+            return $res;
+        }
+        else if(!empty($res) && count($res)==1)
+        {
+            return [$res[0],$res[0]];
+        }
+        else
+        {
+            return [-1,-1];
+        }
+        
+    }
+
 }
 
 
