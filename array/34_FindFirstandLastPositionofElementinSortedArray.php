@@ -2,6 +2,8 @@
 
 # Available @ https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/1219929384
 
+#Available using Data Structure @ https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/1232826352
+
 /*Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
 
 If target is not found in the array, return [-1, -1].
@@ -102,6 +104,76 @@ function searchRange_withoutBuiltIn01($nums, $target) {
             return [-1,-1];
         }
         
+    }
+
+
+# ---------------- Using Data Structure --------------------
+
+/*----- The Algorithm -------
+
+BinarySearch(array, target)
+{
+   left = 0;
+   right = length(array) - 1;
+
+    while left <= right
+    {
+    	 mid = (left + right) / 2;
+  	 if array[mid] == target:
+            return mid  // Target found at index mid
+        else if trget > array[mid]:
+            left = mid + 1  // Search the right half
+        else if target < array[mid]:
+            right = mid - 1  // Search the left half
+      
+    }
+        return -1  // Target not found
+}
+
+*/
+
+function searchRange_ds($nums, $target) {
+
+        $left = $this->binarySearch($nums,$target,true);
+        $right = $this->binarySearch($nums,$target,false);
+
+        return [$left,$right];
+    }
+
+    function binarySearch($nums,$target,$findFirst)
+    {
+        $left = 0;
+        $right = count($nums)-1;
+        $result = -1;
+
+        while($left<=$right)
+        {
+            $mid = intdiv($right+$left,2);
+
+            if($nums[$mid] == $target)
+            {
+                $result = $mid;
+
+                if($findFirst)
+                {
+                    $right = $mid-1;
+                }
+                else
+                {
+                    $left = $mid+1;
+                }
+            }
+            else if($nums[$mid]<$target)
+            {
+                $left = $mid+1;
+            }
+            else
+            {
+                $right = $mid-1;
+            }
+        }
+
+        return $result;
     }
 
 }
